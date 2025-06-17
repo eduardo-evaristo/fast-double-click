@@ -1,5 +1,6 @@
 export type RequestBodyDTO = {
-  tempoPassado: number;
+  tempoPassadoMs: number;
+  tempoPassadoSegundos: number;
   data: Date;
 };
 

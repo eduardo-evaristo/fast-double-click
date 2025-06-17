@@ -23,15 +23,24 @@ app.post(
   "/registros",
   (req: Request<{}, {}, RequestBodyDTO>, res: Response) => {
     // Obtemos o que precisamos
-    const tempoPassado = req.body.tempoPassado;
+    const tempoPassadoMs = req.body.tempoPassadoMs;
+    const tempoPassadoSegundos = req.body.tempoPassadoSegundos;
     const dataClick = req.body.data;
 
     // Validando se tempoPassado é number e se dataClick é Date
-    if (isNaN(tempoPassado) || !isDate(new Date(dataClick)))
+    if (
+      isNaN(tempoPassadoMs) ||
+      isNaN(tempoPassadoSegundos) ||
+      !isDate(new Date(dataClick))
+    )
       return res.status(400).json("O body enviado está inválido");
 
     // Criamos um objeto
-    const objetoRegistro: Registro = { tempoPassado, data: dataClick };
+    const objetoRegistro: Registro = {
+      tempoPassadoMs,
+      data: dataClick,
+      tempoPassadoSegundos,
+    };
 
     // Lemos o arquivo
     fs.readFile(caminhoDB, "utf-8", (err, data) => {

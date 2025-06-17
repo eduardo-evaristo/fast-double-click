@@ -8,24 +8,36 @@ export default function App() {
     if (!clickControl) {
       // Deleta datas salvas, caso houver
       dates.current = [];
+
       // Seta novo valor, para controle
       setClickControl(true);
-      console.log("Primeiro click");
+
       // Inserimos uma data no array
       dates.current.push(new Date());
     } else {
       // Retornamos o controle para 0
       setClickControl(false);
+
       // Inserimos a data final no array
       dates.current.push(new Date());
-      console.log("Esse é o segundo click");
-      // Daqui deveria ir pra API
-      console.log(JSON.stringify(dates.current));
-      // Tempo passado, em segundos
-      console.log(
-        (dates.current[1].getTime() - dates.current[0].getTime()) / 1000
-      );
-      // TODO: Aqui eu devo mandar o tempoPassado em ms para a API, junto da data
+
+      // Salvando variáveis úteis para usá-las no body
+      const tempoPassadoMs =
+        dates.current[1].getTime() - dates.current[0].getTime();
+      const tempoPassadoSegundos =
+        (dates.current[1].getTime() - dates.current[0].getTime()) / 1000;
+      const data = dates.current[0];
+
+      // Enviando dados para serem salvos no backend
+      fetch("http://localhost:8000/registros", {
+        method: "POST",
+        body: JSON.stringify({
+          tempoPassadoMs,
+          tempoPassadoSegundos,
+          data,
+        }),
+        headers: { "Content-Type": "application/json" },
+      });
     }
   }
 
