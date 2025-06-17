@@ -69,4 +69,19 @@ app.post(
   }
 );
 
+app.get("/registros", (req: Request, res: Response) => {
+  // Lemos o arquivo
+  fs.readFile(caminhoDB, "utf-8", (err, data) => {
+    if (err)
+      return res
+        .status(500)
+        .json({ message: "Algo deu errado ao obter registros" });
+
+    // Parseamos ele
+    const registros: Registro[] = JSON.parse(data || "[]");
+    // E enviamos ao cliente
+    res.status(200).json(registros);
+  });
+});
+
 app.listen(port, () => console.log(`Servidor ouvindo na porta ${port}`));
