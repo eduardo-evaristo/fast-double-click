@@ -1,4 +1,7 @@
 import { useRef, useState } from "react";
+import { Link } from "react-router";
+import Button from "../components/Button";
+import { Timer, TimerOff } from "lucide-react";
 
 export default function ButtonPage() {
   const [clickControl, setClickControl] = useState<boolean>(false);
@@ -42,8 +45,38 @@ export default function ButtonPage() {
   }
 
   return (
-    <div>
-      <button onClick={handleClick}> CLick here</button>
+    <div className="flex flex-col h-screen">
+      <header className="fixed top-0 w-full h-16 bg-blue-950 flex items-center justify-end px-6 shadow">
+        <Link
+          to="/registros"
+          className="bg-amber-400 text-black font-bold px-4 py-2 rounded hover:bg-amber-500 transition"
+        >
+          Ver registros
+        </Link>
+      </header>
+
+      <main className="flex-1 flex items-center justify-center mt-16">
+        <Button
+          className="bg-blue-900 hover:bg-blue-950 focus:ring-4 focus:ring-offset-2 focus:ring-blue-950 text-slate-200 font-bold "
+          onClick={handleClick}
+        >
+          {!clickControl ? (
+            <>
+              <span>
+                <Timer size={60} />
+              </span>
+              Clique para começar!
+            </>
+          ) : (
+            <>
+              <span>
+                <TimerOff size={60} />
+              </span>
+              Clique para finalizar!
+            </>
+          )}
+        </Button>
+      </main>
     </div>
   );
 }
