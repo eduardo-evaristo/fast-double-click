@@ -1,4 +1,5 @@
 import type { Registro } from "@shared/types";
+import { formatarSegundos } from "../helpers/helpers";
 
 type Props = {
   registro: Registro;
@@ -20,13 +21,4 @@ export default function ListItem({ registro }: Props) {
       </p>
     </li>
   );
-}
-
-function formatarSegundos(segundos: number) {
-  // Cria data nula/zerada
-  const date = new Date(null!);
-  // Seta os segundos que temos nela
-  date.setSeconds(segundos);
-  // Pegamos a String ISO dela e cortamos a parte que nos interessa
-  return date.toISOString().substring(11, 19);
 }
