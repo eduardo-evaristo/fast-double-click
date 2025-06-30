@@ -5,8 +5,8 @@ export function filtrarPorData(
   dataFinal: string | undefined,
   registros: Registro[]
 ) {
-  const dataInicialDate = dataInicial ? new Date(dataInicial) : null;
-  const dataFinalDate = dataFinal ? new Date(dataFinal) : null;
+  const dataInicialDate = dataInicial ? new Date(parsearDatas(dataInicial)) : null;
+  const dataFinalDate = dataFinal ? new Date(parsearDatas(dataFinal)) : null;
 
   return registros.filter((registro) => {
     const registroDate = new Date(registro.data);
@@ -78,4 +78,9 @@ export function formatarSegundos(segundos: number) {
   date.setSeconds(segundos);
   // Pegamos a String ISO dela e cortamos a parte que nos interessa
   return date.toISOString().substring(11, 19);
+}
+
+function parsearDatas(data: string) {
+  const [year, month, day] = data.split("-");
+  return new Date(+year, +month -1, +day)
 }
